@@ -1,0 +1,20 @@
+connection:
+    port: 'COM4'
+    baudRate: 115200
+devices:
+  - name: 'x'
+    driver: 'AZR-CD'
+    unitAddress: 1
+    resolution: '(1000step)/(6mm)'
+  - name: 'y'
+    driver: 'AZR-CD'
+    unitAddress: 2
+    resolution: '(1000step)/(6mm)'
+  - name: 'reactor'
+    driver: 'AZR-CD'
+    unitAddress: 3
+    resolution: '(1000step)/(6mm)'
+  - name: 'z'
+    driver: 'AZK-KX'
+    unitAddress: 4
+    resolution: '(5000step)/(6mm)'
