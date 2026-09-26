@@ -3,13 +3,13 @@ from os import PathLike
 from pathlib import Path
 from typing import Annotated, Literal
 
+import pint
+import pydantic_pint
 from omegaconf import OmegaConf
 from pint import Quantity
-import pint
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic_pint import PydanticPintQuantity
 from rich.pretty import pretty_repr
-import pydantic_pint
 
 ureg = pint.application_registry.get()
 ureg.define(

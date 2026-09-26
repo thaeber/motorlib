@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Literal
 
 import pint
 from reactivex import Observable
@@ -48,6 +47,14 @@ class BaseController(ABC):
         distance: pint.Quantity,
     ):
         """Move the motor by the specified distance."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def move_to(
+        self,
+        position: pint.Quantity,
+    ):
+        """Move the motor to the specified position."""
         raise NotImplementedError
 
     @abstractmethod

@@ -51,3 +51,25 @@ def move(ctx: click.Context, distance) -> None:
         device.move_by(distance)
     except (ModbusIOException, RuntimeError) as e:
         logger.error(e)
+
+
+@main.command(context_settings={'ignore_unknown_options': True})
+@click.pass_context
+@click.argument(
+    'position',
+    type=pint.Quantity,
+    required=True,
+    callback=pint_dimensionality_validator('[length]'),
+    help=('The position to move the motor to. Must be a physical distance, e.g. 10mm.'),
+)
+def goto(ctx: click.Context, position) -> None:
+    """Move the motor to the specified position."""
+    logger = logging.getLogger(__name__)
+
+    logger.info(f'Moving motor to position: {position:~P}')
+
+    device: BaseController = ctx.obj['device']
+    try:
+        device.move_to(position)
+    except (ModbusIOException, RuntimeError) as e:
+        logger.error(e)

@@ -185,6 +185,21 @@ class AZKKXController(OrientalMotorsBaseController):
         self,
         distance: pint.Quantity,
     ):
+        self._move(distance, mode='incremental')
+
+    @override
+    def move_to(
+        self,
+        position: pint.Quantity,
+    ):
+        self._move(position, mode='absolute')
+
+    @override
+    def _move(
+        self,
+        distance: pint.Quantity,
+        mode: Literal['absolute', 'incremental'] = 'incremental',
+    ):
         """Move the motor by the specified distance."""
         logger = logging.getLogger(__name__)
 
@@ -199,7 +214,7 @@ class AZKKXController(OrientalMotorsBaseController):
             operation_number=0,
             position=distance,
             speed=self.device_config.speed,
-            mode='incremental',
+            mode=mode,
         )
 
         # start move operation by setting the START and M0 bits in the input signal register

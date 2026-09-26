@@ -11,7 +11,6 @@ from .cli import main
 @click.pass_context
 def alarm(ctx: click.Context) -> None:
     """Manage the alarm state of the motor."""
-    pass
 
 
 @alarm.command()

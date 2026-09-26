@@ -179,6 +179,20 @@ class AZRCDController(OrientalMotorsBaseController):
         self,
         distance: pint.Quantity,
     ):
+        self._move(distance, mode='incremental')
+
+    @override
+    def move_to(
+        self,
+        position: pint.Quantity,
+    ):
+        self._move(position, mode='absolute')
+
+    def _move(
+        self,
+        distance: pint.Quantity,
+        mode: Literal['absolute', 'incremental'] = 'incremental',
+    ):
         """Move the motor by the specified distance."""
         logger = logging.getLogger(__name__)
 
@@ -191,11 +205,11 @@ class AZRCDController(OrientalMotorsBaseController):
             operation_number=0,
             position=distance,
             speed=self.device_config.speed,
-            mode='incremental',
+            mode=mode,
         )
 
         # start move operation using operation number 0 (or the specified operation number)
-        result = self._set_register_int32(
+        _ = self._set_register_int32(
             unit_address=self.device_config.unitAddress,
             register_address=0x007C,
             value=1 << 3,
